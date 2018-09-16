@@ -16,14 +16,20 @@ public class Onboarding_component extends BrowserSetup{
 		WebElement uname=driver.findElement(By.id("uname"));
 		uname.clear();
 		uname.sendKeys(username);
-		System.out.println("username sent");
 
 		WebElement pwd=driver.findElement(By.id("psw"));
 		pwd.clear();
 		pwd.sendKeys(password);
-		System.out.println("password sent");
 
 		driver.findElement(By.name("submit")).click();
+
+	}
+	
+	public static void logout() {
+
+
+		driver.findElement(By.xpath("//a[text()='[Keluar]'] | //a[text()='[Logout]']")).click();
+		
 
 	}
 }

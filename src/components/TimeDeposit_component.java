@@ -1,7 +1,6 @@
 package components;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
@@ -23,13 +22,29 @@ public class TimeDeposit_component extends BrowserSetup {
 
 	}
 
+	public static void syariahMenu(String folder,String filename) {
+
+		wait30.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='[Logout]'] | //a[text()='[Keluar]']"))).isDisplayed();
+
+		driver.findElement(By.xpath("//a[text()='Sharia Online Open Account'] | //a[text()='Pembukaan Rekening Online Syariah']")).click();
+
+		Screenshot.capture(folder, filename);
+		Select productList = new Select(driver.findElement(By.name("productType")));
+		productList.selectByValue("timeDeposit");
+
+	}
+
 	public static void create(String sourceAccount,String amount,String term,String tdType,String folder,String filename) {
 
 		Select accountList = new Select(driver.findElement(By.name("debitAccountNumber")));	
 		accountList.selectByValue(sourceAccount);
 
 		Select branchList = new Select(driver.findElement(By.name("bankBranch")));
-		branchList.selectByValue("ID0010087");
+
+		if(sourceAccount.startsWith("99"))
+			branchList.selectByValue("ID0020002");
+		else
+			branchList.selectByValue("ID0010087");	
 
 		driver.findElement(By.name("initialDeposit")).sendKeys(amount);
 
@@ -42,15 +57,15 @@ public class TimeDeposit_component extends BrowserSetup {
 		else if (tdType.equals("aro-pi"))tdTypeList.selectByVisibleText("ARO Plus Bunga");
 
 		Screenshot.capture(folder, filename);
-		driver.findElement(By.xpath("//input[@value='Confirm']")).click();
+		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Submit']")).click();	
 	}
-	
+
 	public static void termAndCondition(String folder,String filename) {
 
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='Aplikasi Deposito Berjangka'] | //td[text()='Time Deposit Application']"))).isDisplayed();
-		
+
 		driver.findElement(By.name("isAgree")).click();
-		
+
 		Screenshot.capture(folder, filename);
 		driver.findElement(By.xpath("//input[@value='Continue']")).click();
 	}
@@ -61,11 +76,11 @@ public class TimeDeposit_component extends BrowserSetup {
 		Screenshot.capture(folder, filename);
 		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Submit']")).click();	
 	}
-	
+
 	public static void result(String folder,String filename) {
 
 		Screenshot.capture(folder, filename);
 
 	}
-	
+
 }

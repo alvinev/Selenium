@@ -17,10 +17,10 @@ public class CreateTimeDepositKonven extends BrowserSetup{
 
 	public CreateTimeDepositKonven() throws IOException {
 		Properties prop = LoadProperties.getProperties("timedeposit.properties");
-		this.sourceAccount=prop.getProperty("sourceAccount");
-		this.amount=prop.getProperty("amount");
-		this.term=prop.getProperty("term");
-		this.tdType=prop.getProperty("tdType");
+		this.sourceAccount=prop.getProperty("sourceAccountKonven");
+		this.amount=prop.getProperty("amountKonven");
+		this.term=prop.getProperty("termKonven");
+		this.tdType=prop.getProperty("tdTypeKonven");
 		
 	}
 	

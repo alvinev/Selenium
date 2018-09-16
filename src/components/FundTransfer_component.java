@@ -52,7 +52,7 @@ public class FundTransfer_component extends BrowserSetup {
 		driver.findElement(By.name("description")).sendKeys(desc);
 		
 		Screenshot.capture(folder, filename);
-		driver.findElement(By.xpath("//input[@value='Confirm']")).click();
+		driver.findElement(By.xpath("//input[@value='Konfirmasi'] | //input[@value='Confirm']")).click();	
 
 	}
 	
@@ -87,7 +87,7 @@ public class FundTransfer_component extends BrowserSetup {
 		driver.findElement(By.name("description")).sendKeys(desc);
 		
 		Screenshot.capture(folder, filename);
-		driver.findElement(By.xpath("//input[@value='Confirm']")).click();
+		driver.findElement(By.xpath("//input[@value='Konfirmasi'] | //input[@value='Confirm']")).click();	
 
 	}
 	

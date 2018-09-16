@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 
 import components.FundTransfer_component;
@@ -40,22 +36,22 @@ public class TransferOtherbank extends BrowserSetup{
 	@Test
 	private void Test01_otbankMenu(Method method) {
 		
-		FundTransfer_component.otbankMenu(folder,method.getName()+"_"+desc);
+		FundTransfer_component.otbankMenu(folder,method.getName()+"_"+otbankMethod);
 	}
 
 	@Test(dependsOnMethods="Test01_otbankMenu")
 	private void Test02_otbankSelectAccount(Method method) {
 		
-		FundTransfer_component.otbankSelectAccount(otbankMethod,sourceAccount, toAccount, amount,desc,folder,method.getName()+"_"+desc);
+		FundTransfer_component.otbankSelectAccount(otbankMethod,sourceAccount, toAccount, amount,desc,folder,method.getName()+"_"+otbankMethod);
 	}
 	
 	@Test(dependsOnMethods="Test02_otbankSelectAccount")
 	private void Test03_otbankConfirm(Method method) {		
-		FundTransfer_component.confirm(folder,method.getName()+"_"+desc);
+		FundTransfer_component.confirm(folder,method.getName()+"_"+otbankMethod);
 	}
 	
 	@Test(dependsOnMethods="Test03_otbankConfirm")
 	private void Test04_otbankResult(Method method) {
-		FundTransfer_component.result(folder,method.getName()+"_"+desc);		
+		FundTransfer_component.result(folder,method.getName()+"_"+otbankMethod);		
 	}
 }

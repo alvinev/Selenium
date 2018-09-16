@@ -3,9 +3,12 @@ package framework;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import components.Onboarding_component;
@@ -30,11 +33,16 @@ public class BrowserSetup {
 		Properties prop = LoadProperties.getProperties("credential.properties");
 		
 		driver.get(prop.getProperty("url"));
-		System.out.println("Login Page Loaded");
+		driver.manage().window().maximize();	
 
 		Onboarding_component.login(prop.getProperty("username"),prop.getProperty("password"));
 	}
-
+	
+	//@AfterClass
+	protected void teardown() {
+		
+		Onboarding_component.logout();
+	}
 
 	
 }
