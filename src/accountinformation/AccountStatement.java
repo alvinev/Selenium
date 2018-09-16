@@ -29,19 +29,19 @@ public class AccountStatement extends BrowserSetup {
 	}
 
 	@Test
-	private void Test01_menu(Method method) {
+	private void Test00_menu(Method method) {
 
-		AccountInformation_component.accountStatementMenu(folder, method.getName());
+		AccountInformation_component.accountStatementMenu();
 	}
 
-	@Test(dependsOnMethods="Test01_menu")
-	private void Test02_selectAccountPeriod(Method method) {
+	@Test(dependsOnMethods="Test00_menu")
+	private void Test01_selectAccountPeriod(Method method) {
 
 		AccountInformation_component.accountStatementSelectAccountPeriod(account, period, folder, method.getName());
 	}
 	
-	@Test(dependsOnMethods="Test02_selectAccountPeriod")
-	private void Test03_result(Method method) {
+	@Test(dependsOnMethods="Test01_selectAccountPeriod")
+	private void Test02_result(Method method) {
 
 		AccountInformation_component.accountStatementResult(folder, method.getName());
 	}

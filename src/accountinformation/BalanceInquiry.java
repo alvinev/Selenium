@@ -28,13 +28,13 @@ public class BalanceInquiry extends BrowserSetup {
 	}
 	
 	@Test
-	private void Test01_menu(Method method) {
+	private void Test00_menu(Method method) {
 		
-		AccountInformation_component.balanceInquiryMenu(folder, method.getName());
+		AccountInformation_component.balanceInquiryMenu();
 		
 	}
 	
-	@Test(dependsOnMethods="Test01_menu")
+	@Test(dependsOnMethods="Test00_menu")
 	private void Test02_selectAccount(Method method) {
 		
 		AccountInformation_component.balanceInquirySelectAccount(account, folder, method.getName());

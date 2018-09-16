@@ -31,25 +31,25 @@ public class CardlessWithdrawal extends BrowserSetup {
 	}
 
 	@Test
-	private void Test01_cardlessWithdrawMenu(Method method) {
+	private void Test00_cardlessWithdrawMenu(Method method) {
 		
-		CardlessWithdrawal_component.menu(folder,method.getName()+"_"+desc);
+		CardlessWithdrawal_component.menu();
 	}
 
-	@Test(dependsOnMethods="Test01_cardlessWithdrawMenu")
-	private void Test02_cardlessWithdrawSelectAccount(Method method) {
+	@Test(dependsOnMethods="Test00_cardlessWithdrawMenu")
+	private void Test01_cardlessWithdrawSelectAccount(Method method) {
 		
-		CardlessWithdrawal_component.selectPayee(sourceAccount, phoneNo, amount, desc, folder, method.getName()+"_"+desc);
+		CardlessWithdrawal_component.selectPayee(sourceAccount, phoneNo, amount, desc, folder, method.getName());
 	}
 	
-	@Test(dependsOnMethods="Test02_cardlessWithdrawSelectAccount")
-	private void Test03_cardlessWithdrawConfirm(Method method) {	
+	@Test(dependsOnMethods="Test01_cardlessWithdrawSelectAccount")
+	private void Test02_cardlessWithdrawConfirm(Method method) {	
 		
-		CardlessWithdrawal_component.confirm(folder,method.getName()+"_"+desc);
+		CardlessWithdrawal_component.confirm(folder,method.getName());
 	}
 	
-	@Test(dependsOnMethods="Test03_cardlessWithdrawConfirm")
-	private void Test04_cardlessWithdrawResult(Method method) {
-		CardlessWithdrawal_component.result(folder,method.getName()+"_"+desc);
+	@Test(dependsOnMethods="Test02_cardlessWithdrawConfirm")
+	private void Test03_cardlessWithdrawResult(Method method) {
+		CardlessWithdrawal_component.result(folder,method.getName());
 	}
 }

@@ -31,31 +31,31 @@ public class CreateTimeDepositSyariah extends BrowserSetup{
 	}
 
 	@Test
-	private void Test01_syariahMenu(Method method) {
+	private void Test00_syariahMenu(Method method) {
 		
-		TimeDeposit_component.syariahMenu(folder,method.getName()+"_"+tdType+"_"+term);
+		TimeDeposit_component.syariahMenu();
 	}
 
-	@Test(dependsOnMethods="Test01_syariahMenu")
-	private void Test02_syariahCreate(Method method) {
+	@Test(dependsOnMethods="Test00_syariahMenu")
+	private void Test01_syariahCreate(Method method) {
 		
 		TimeDeposit_component.create(sourceAccount, amount, term, tdType, folder, method.getName()+"_"+tdType+"_"+term);
 	}
 	
-	@Test(dependsOnMethods="Test02_syariahCreate")
-	private void Test03_syariahTermAndCondition(Method method) {
+	@Test(dependsOnMethods="Test01_syariahCreate")
+	private void Test02_syariahTermAndCondition(Method method) {
 		
 		TimeDeposit_component.termAndCondition(folder,method.getName()+"_"+tdType+"_"+term);
 	}
 	
-	@Test(dependsOnMethods="Test03_syariahTermAndCondition")
-	private void Test04_syariahConfirm(Method method) {		
+	@Test(dependsOnMethods="Test02_syariahTermAndCondition")
+	private void Test03_syariahConfirm(Method method) {		
 		
 		TimeDeposit_component.confirm(folder, method.getName()+"_"+tdType+"_"+term);
 	}
 	
-	@Test(dependsOnMethods="Test04_syariahConfirm")
-	private void Test05_syariahResult(Method method) {
+	@Test(dependsOnMethods="Test03_syariahTermAndCondition")
+	private void Test04_syariahResult(Method method) {
 		TimeDeposit_component.result(folder,  method.getName()+"_"+tdType+"_"+term);
 	}
 

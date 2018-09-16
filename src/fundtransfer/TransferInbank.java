@@ -33,24 +33,24 @@ public class TransferInbank extends BrowserSetup {
 	}
 
 	@Test
-	private void Test01_inbankMenu(Method method) {
+	private void Test00_inbankMenu(Method method) {
 		
-		FundTransfer_component.inbankMenu(folder,method.getName()+"_"+desc);
+		FundTransfer_component.inbankMenu();
 	}
 
-	@Test(dependsOnMethods="Test01_inbankMenu")
-	private void Test02_inbankSelectAccount(Method method) {
+	@Test(dependsOnMethods="Test00_inbankMenu")
+	private void Test01_inbankSelectAccount(Method method) {
 		
-		FundTransfer_component.inbankSelectAccount(sourceAccount, toAccount, amount,desc,folder,method.getName()+"_"+desc);
+		FundTransfer_component.inbankSelectAccount(sourceAccount, toAccount, amount,desc,folder,method.getName());
 	}
 	
-	@Test(dependsOnMethods="Test02_inbankSelectAccount")
-	private void Test03_inbankConfirm(Method method) {		
-		FundTransfer_component.confirm(folder,method.getName()+"_"+desc);
+	@Test(dependsOnMethods="Test01_inbankSelectAccount")
+	private void Test02_inbankConfirm(Method method) {		
+		FundTransfer_component.confirm(folder,method.getName());
 	}
 	
-	@Test(dependsOnMethods="Test03_inbankConfirm")
-	private void Test04_inbankResult(Method method) {
-		FundTransfer_component.result(folder,method.getName()+"_"+desc);		
+	@Test(dependsOnMethods="Test02_inbankConfirm")
+	private void Test03_inbankResult(Method method) {
+		FundTransfer_component.result(folder,method.getName());		
 	}
 }

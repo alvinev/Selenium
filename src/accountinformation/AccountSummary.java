@@ -27,12 +27,18 @@ public class AccountSummary extends BrowserSetup {
 	}
 
 	@Test
-	private void Test01_menu(Method method) {
+	private void Test00_menu(Method method) {
 
-		AccountInformation_component.accountSummaryMenu(account, folder, method.getName());
+		AccountInformation_component.accountSummaryMenu();
+	}
+	
+	@Test(dependsOnMethods="Test00_menu")
+	private void Test01_selectAccount(Method method) {
+		
+		AccountInformation_component.accountSummaryselectAccount(account, folder, method.getName());
 	}
 
-	@Test(dependsOnMethods="Test01_menu")
+	@Test(dependsOnMethods="Test01_selectAccount")
 	private void Test02_result(Method method) {
 
 		AccountInformation_component.accountSummaryResult(folder, method.getName());

@@ -33,25 +33,25 @@ public class Block3_AsuransiSinarmas extends BrowserSetup {
 	}
 
 	@Test
-	private void Test01_AsuransiSinarmasMenu(Method method) {
+	private void Test00_AsuransiSinarmasMenu(Method method) {
 
 		BillPayment_component.menu(billerName, folder, method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test01_AsuransiSinarmasMenu")
-	private void Test02_AsuransiSinarmasSelectAccount(Method method) {
+	@Test(dependsOnMethods="Test00_AsuransiSinarmasMenu")
+	private void Test01_AsuransiSinarmasSelectAccount(Method method) {
 
 		BillPayment_component.block3_selectAccount(sourceAccount, subscriberNo, amount,desc, folder, method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test02_AsuransiSinarmasSelectAccount")
-	private void Test03_AsuransiSinarmasConfirm(Method method) {	
+	@Test(dependsOnMethods="Test01_AsuransiSinarmasSelectAccount")
+	private void Test02_AsuransiSinarmasConfirm(Method method) {	
 
 		BillPayment_component.confirm(folder,  method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test03_AsuransiSinarmasConfirm")
-	private void Test04_AsuransiSinarmasResult(Method method) {
+	@Test(dependsOnMethods="Test02_AsuransiSinarmasConfirm")
+	private void Test03_AsuransiSinarmasResult(Method method) {
 
 		BillPayment_component.result(folder,  method.getName()+"_"+desc);
 	}

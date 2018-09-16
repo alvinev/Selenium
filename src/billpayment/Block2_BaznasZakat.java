@@ -33,25 +33,25 @@ public class Block2_BaznasZakat extends BrowserSetup{
 	}
 
 	@Test
-	private void Test01_BaznasZakatMenu(Method method) {
+	private void Test00_BaznasZakatMenu(Method method) {
 
 		BillPayment_component.menu(billerName, folder, method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test01_BaznasZakatMenu")
-	private void Test02_BaznasZakatSelectAccount(Method method) {
+	@Test(dependsOnMethods="Test00_BaznasZakatMenu")
+	private void Test01_BaznasZakatSelectAccount(Method method) {
 
 		BillPayment_component.block2_selectAccount(sourceAccount, subscriberNo, amount,desc, folder, method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test02_BaznasZakatSelectAccount")
-	private void Test03_BaznasZakatConfirm(Method method) {	
+	@Test(dependsOnMethods="Test01_BaznasZakatSelectAccount")
+	private void Test02_BaznasZakatConfirm(Method method) {	
 
 		BillPayment_component.confirm(folder,  method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test03_BaznasZakatConfirm")
-	private void Test04_BaznasZakatResult(Method method) {
+	@Test(dependsOnMethods="Test02_BaznasZakatConfirm")
+	private void Test03_BaznasZakatResult(Method method) {
 
 		BillPayment_component.result(folder,  method.getName()+"_"+desc);
 	}

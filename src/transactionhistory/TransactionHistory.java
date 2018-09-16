@@ -20,7 +20,6 @@ public class TransactionHistory extends BrowserSetup{
 	
 		Properties prop = LoadProperties.getProperties("transactionhistory.properties");
 		this.account=prop.getProperty("account");		
-		
 	}
 	
 	public TransactionHistory(String account) {
@@ -28,26 +27,22 @@ public class TransactionHistory extends BrowserSetup{
 		this.account=account;
 	}
 	
-	
 	@Test
-	private void menu(Method method) {
-		
+	private void Test00_menu(Method method) {
 	
-		TransactionHistory_component.menu(folder, method.getName());
+		TransactionHistory_component.menu();
 	}
 	
 	@Test(dependsOnMethods="menu")
-	private void selectPayee(Method method) {
+	private void Test01_selectPayee(Method method) {
 		
 		TransactionHistory_component.selectPayee(account, folder, method.getName());
 	}
 	
 	@Test(dependsOnMethods="selectPayee")
-	private void result(Method method) {
-		
+	private void Test02_result(Method method) {
 		
 		TransactionHistory_component.result(folder, method.getName());
 	}
 
-	
 }

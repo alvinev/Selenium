@@ -32,25 +32,25 @@ public class Block1_WaterAetra extends BrowserSetup{
 	}
 
 	@Test
-	private void Test01_WaterAetraMenu(Method method) {
+	private void Test00_WaterAetraMenu(Method method) {
 
 		BillPayment_component.menu(billerName, folder, method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test01_WaterAetraMenu")
-	private void Test02_waterAetraSelectAccount(Method method) {
+	@Test(dependsOnMethods="Test00_WaterAetraMenu")
+	private void Test01_waterAetraSelectAccount(Method method) {
 
 		BillPayment_component.block1_selectAccount(sourceAccount, subscriberNo, desc, folder, method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test02_waterAetraSelectAccount")
-	private void Test03_waterAetraConfirm(Method method) {	
+	@Test(dependsOnMethods="Test01_waterAetraSelectAccount")
+	private void Test02_waterAetraConfirm(Method method) {	
 
 		BillPayment_component.confirm(folder,  method.getName()+"_"+desc);
 	}
 
-	@Test(dependsOnMethods="Test03_waterAetraConfirm")
-	private void Test04_waterAetraResult(Method method) {
+	@Test(dependsOnMethods="Test02_waterAetraConfirm")
+	private void Test03_waterAetraResult(Method method) {
 
 		BillPayment_component.result(folder,  method.getName()+"_"+desc);
 	}
