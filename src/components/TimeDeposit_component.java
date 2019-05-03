@@ -1,43 +1,49 @@
 package components;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-
-import framework.BrowserSetup;
-import framework.Screenshot;
-
-public class TimeDeposit_component extends BrowserSetup {
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 
-	public static void konvenMenu() {
+public class TimeDeposit_component {
+	
+	private WebDriver driver;
+	private WebDriverWait wait10;
+	
+	public TimeDeposit_component(WebDriver driver) {
+		
+		this.driver=driver;
+		wait10=new WebDriverWait(driver,10);
+	}
+
+	public void konvenMenu() {
 		driver.findElement(By.xpath("//a[text()='Online Open Account'] | //a[text()='Pembukaan Rekening Online']")).click();
 		Select productList = new Select(driver.findElement(By.name("productType")));
 		productList.selectByValue("timeDeposit");
-
 	}
 
-	public static void syariahMenu() {
+	public void syariahMenu() {
 		driver.findElement(By.xpath("//a[text()='Sharia Online Open Account'] | //a[text()='Pembukaan Rekening Online Syariah']")).click();
 		Select productList = new Select(driver.findElement(By.name("productType")));
 		productList.selectByValue("timeDeposit");
 
 	}
 
-	public static void create(String sourceAccount,String amount,String term,String tdType,String folder,String filename) {
+	public void create(String sourceAccount,String amount,String term,String tdType) {
 
 		//select account
 		Select accountList = new Select(driver.findElement(By.name("debitAccountNumber")));	
 		accountList.selectByValue(sourceAccount);
 
 		//select branch (this is defaulted for sya :ID0020002 and konven : ID0020002)
-		Select branchList = new Select(driver.findElement(By.name("bankBranch")));
-
-		if(sourceAccount.startsWith("99"))
-			branchList.selectByValue("ID0020002");
-		else
-			branchList.selectByValue("ID0010087");	
-
+		
+		if(driver.findElements(By.name("bankBranch")).size()>0) {
+		 Select branchList = new Select(driver.findElement(By.name("bankBranch"))); 
+		 if(sourceAccount.startsWith("99")) branchList.selectByValue("ID0020002");
+		}
 		//input amount
 		driver.findElement(By.name("initialDeposit")).sendKeys(amount);
 
@@ -51,34 +57,38 @@ public class TimeDeposit_component extends BrowserSetup {
 		else if(tdType.equals("non-aro"))tdTypeList.selectByVisibleText("Non ARO");
 		else if (tdType.equals("aro-pi"))tdTypeList.selectByVisibleText("ARO Plus Bunga");
 
-		Screenshot.capture(folder, filename);
 		//submit
-		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Submit']")).click();	
+		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Confirm']")).click();	
 	}
 
-	public static void termAndCondition(String folder,String filename) {
+	public void termAndCondition() {
 
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//agree tnc
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='Aplikasi Deposito Berjangka'] | //td[text()='Time Deposit Application']"))).isDisplayed();
 		driver.findElement(By.name("isAgree")).click();
-		Screenshot.capture(folder, filename);
 		
 		//submit
 		driver.findElement(By.xpath("//input[@value='Continue']")).click();
 	}
-	public static void confirm(String folder,String filename) {
+	public void confirm() {
 
 		//input mpin
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.name("mPin"))).sendKeys("123456");
 
-		Screenshot.capture(folder, filename);
 		//submit
 		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Submit']")).click();	
 	}
 
-	public static void result(String folder,String filename) {
+	public void result() {
 
-		Screenshot.capture(folder, filename);
+		Assert.assertEquals(true, driver.findElement(By.xpath("//td[contains(text(),'Berhasil')] | //td[contains(text(),'Successful')]")).isDisplayed());
+
 
 	}
 

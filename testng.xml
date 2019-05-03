@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="IB-Testing">
+	<test name="AccountInformation">
+		<classes>
+			<class name="accountinformation.AccountStatement" />
+			<class name="accountinformation.AccountSummary" />
+			<class name="accountinformation.BalanceInquiry" />
+		</classes>
+	</test>
+	<test name="BillPayment">
+		<classes>
+			<class name="billpayment.AsuransiSinarmas" />
+			<class name="billpayment.BaznasZakat" />
+			<class name="billpayment.PAM_Aetra" />
+		</classes>
+	</test>
+	<test name="CardlessWithdrawal">
+		<classes>
+			<class name="cardlesswithdrawal.CardlessWithdrawal" />
+		</classes>
+	</test>
+	<test name="FundTransfer">
+		<classes>
+			<class name="fundtransfer.TransferInbank" />
+			<class name="fundtransfer.TransferOtherbank" />
+		</classes>
+	</test>
+	<test name="TimeDeposit">
+		<classes>
+			<class name="timedeposit.CreateTimeDepositKonven" />
+			<class name="timedeposit.CreateTimeDepositSyariah" />
+		</classes>
+	</test>
+	<test name="TransactionHistory">
+		<classes>
+			<class name="transactionhistory.TransactionHistory" />
+		</classes>
+	</test>
+</suite>

@@ -1,48 +1,62 @@
 package transactionhistory;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Properties;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import components.TransactionHistory_component;
 import framework.BrowserSetup;
-import framework.LoadProperties;
 
 public class TransactionHistory extends BrowserSetup{
 
 	
-	private String account;
-	private String folder = "TransactionHistory";
+	private String fromAccountType,fromAccount;
+	private TransactionHistory_component transactionHistory;
 	
 	public TransactionHistory() throws IOException {
 	
-		Properties prop = LoadProperties.getProperties("transactionhistory.properties");
-		this.account=prop.getProperty("account");		
+		this(
+				DEFAULT_PROPERTIES.getProperty("DEF_USERNAME"),
+				DEFAULT_PROPERTIES.getProperty("DEF_FROM_ACCOUNT_TYPE")
+				);	
 	}
 	
-	public TransactionHistory(String account) {
+	public TransactionHistory(String fromAccountType) throws IOException {
 		
-		this.account=account;
+		this(DEFAULT_PROPERTIES.getProperty("DEF_AUTOMATION_USERNAME"),fromAccountType);	
+	}
+	
+	public TransactionHistory(String username,String fromAccountType) throws IOException {
+		BrowserSetup.setUser(username);
+		this.fromAccountType=fromAccountType;
+		this.fromAccount=user_prop.getProperty(this.fromAccountType);
+		
+		
+	}
+	
+	@BeforeClass
+	private void loadComponents() {
+		
+		transactionHistory=new TransactionHistory_component(driver);
 	}
 	
 	@Test
-	private void Test00_menu(Method method) {
+	private void Test01_menu() {
 	
-		TransactionHistory_component.menu();
+		transactionHistory.menu();
 	}
 	
-	@Test(dependsOnMethods="menu")
-	private void Test01_selectPayee(Method method) {
+	@Test(dependsOnMethods="Test01_menu")
+	private void Test02_selectPayee() {
 		
-		TransactionHistory_component.selectPayee(account, folder, method.getName());
+		transactionHistory.selectPayee(fromAccount);
 	}
 	
-	@Test(dependsOnMethods="selectPayee")
-	private void Test02_result(Method method) {
+	@Test(dependsOnMethods="Test02_selectPayee")
+	private void Test03_result() {
 		
-		TransactionHistory_component.result(folder, method.getName());
+		transactionHistory.result();
 	}
 
 }

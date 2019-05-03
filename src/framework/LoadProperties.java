@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class LoadProperties {
 
-	private static String folder="Resources/Properties";
+	private static final String folder="Resources/Properties";
 	
 	public static Properties getProperties(String filename) throws IOException {
 		Properties prop = new Properties();           
@@ -16,5 +16,19 @@ public class LoadProperties {
 		return prop;		
 	}
 	
+	
+	public static Properties getUserProperties(String username) throws IOException {
+		return getProperties("User/"+username);
+	}
+	
+	public static Properties getDefaultProperties()  {
+		Properties prop = null;
+		try {
+			prop=getProperties("default.properties");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return prop;
+	}
 }
 

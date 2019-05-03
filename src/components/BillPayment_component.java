@@ -1,16 +1,28 @@
 package components;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
-import framework.BrowserSetup;
-import framework.Screenshot;
 
-public class BillPayment_component extends BrowserSetup{
 
-	public static void menu(String billerName,String folder,String filename) {
+public class BillPayment_component {
+
+	private WebDriver driver;
+	private WebDriverWait wait10;
+	
+	public BillPayment_component(WebDriver driver) {
+		
+		this.driver=driver;
+		wait10 = new WebDriverWait(driver,10);
+		
+	}
+	
+	public void menu(String billerName) {
 		
 		//go to biller menu
 		driver.findElement(By.xpath("//a[text()='Pembayaran/Pembelian'] | //a[text()='Payment/Purchase']")).click();
@@ -21,27 +33,38 @@ public class BillPayment_component extends BrowserSetup{
 		driver.findElement(By.xpath("//i[text()='"+billerName+"']")).click();;
 			
 	}
-	public static void block1_selectAccount(String sourceAccount,String subscriberNo,String desc,String folder,String filename) {
+	
+	public void aetra_inquiry(String subscriberNo) {
 		
 		//input subscriber no
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.name("subscriberNo"))).sendKeys(subscriberNo);
 		driver.findElement(By.xpath("//input[@value='Retrieve'] | //input[@value='Lihat Tagihan']")).click();
 		
+		
+	}
+	public void aetra_selectAccount(String sourceAccount,String desc) {
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//select account
 		Select accountList = new Select(driver.findElement(By.name("accountFrom")));
 		for(WebElement we : accountList.getOptions()) {
 			String account =we.getText(); 
+		
 			if(account.contains(sourceAccount))accountList.selectByVisibleText(account);
 		}
 		//input desc
 		driver.findElement(By.name("description")).sendKeys(desc);
 		
-		Screenshot.capture(folder, filename);
 		//submit
 		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Submit']")).click();	
 	}
 	
-	public static void block2_selectAccount(String sourceAccount,String subscriberNo,String amount,String desc,String folder,String filename) {
+	public void baznas_selectAccount(String sourceAccount,String subscriberNo,String amount,String desc) {
 		
 		//input subscriber no
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.name("subscriberNo"))).sendKeys(subscriberNo);
@@ -58,12 +81,11 @@ public class BillPayment_component extends BrowserSetup{
 		//input desc
 		driver.findElement(By.name("description")).sendKeys(desc);
 		
-		Screenshot.capture(folder, filename);
 		//submit
 		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Submit']")).click();	
 	
 	}
-	public static void block3_selectAccount(String sourceAccount,String subscriberNo,String amount,String desc,String folder,String filename) {
+	public void asuransi_selectAccount(String sourceAccount,String subscriberNo,String amount,String desc) {
 		
 		//input subscriber no
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.name("subscriberNo"))).sendKeys(subscriberNo);
@@ -80,26 +102,25 @@ public class BillPayment_component extends BrowserSetup{
 		//input desc
 		driver.findElement(By.name("description")).sendKeys(desc);
 		
-		Screenshot.capture(folder, filename);
 		//submit
 		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Submit']")).click();	
 	
 	}
 	
-	public static void confirm(String folder,String filename) {
+	public void confirm() {
 		
 		//input mpin
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.name("mPin"))).sendKeys("123456");
-		Screenshot.capture(folder, filename);
 		
 		//confirm
 		driver.findElement(By.xpath("//input[@value='Konfirmasi'] | //input[@value='Confirm']")).click();
 		
 	}
 	
-	public static void result(String folder,String filename) {
+	public void result() {
 		
-		Screenshot.capture(folder, filename);
+		Assert.assertEquals(true, driver.findElement(By.xpath("//td[contains(text(),'Berhasil')] | //td[contains(text(),'Successful')]")).isDisplayed());
+
 		
 	}
 	

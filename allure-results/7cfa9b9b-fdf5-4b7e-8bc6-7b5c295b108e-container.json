@@ -1,0 +1,1 @@
+{"uuid":"7cfa9b9b-fdf5-4b7e-8bc6-7b5c295b108e","name":"Default suite","start":1556782090703,"stop":1556782122238,"children":["ac10561e-030e-476b-af5e-1e4626de8b2d"],"befores":[{"name":"browserConfiguration","stage":"finished","description":"","start":1556782090764,"stop":1556782099694}]}

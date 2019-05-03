@@ -1,49 +1,63 @@
 package accountinformation;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Properties;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import components.AccountInformation_component;
 import framework.BrowserSetup;
-import framework.LoadProperties;
 
 public class BalanceInquiry extends BrowserSetup {
 
-	private String folder="AccountInformation/BalanceInquiry";
-	private String account;
-	
+	private String fromAccountType,account;
+	private AccountInformation_component accountInformation;
+
 	public BalanceInquiry() throws IOException {
-		
-		Properties prop = LoadProperties.getProperties("accountinformation.properties");
-		this.account=prop.getProperty("balanceInquiryAccount");
-	
+
+		this(
+				DEFAULT_PROPERTIES.getProperty("DEF_USERNAME"),
+				DEFAULT_PROPERTIES.getProperty("DEF_FROM_ACCOUNT_TYPE"));
+
 	}
 	
-	public BalanceInquiry(String account) {
-			
-		this.account=account;
+	public BalanceInquiry(String fromAccountType) throws IOException {
+		
+		this(DEFAULT_PROPERTIES.getProperty("DEF_AUTOMATION_USERNAME"),fromAccountType);
+		
+	}
+
+	public BalanceInquiry(String username,String fromAccountType) throws IOException {
+		BrowserSetup.setUser(username);
+		this.fromAccountType=fromAccountType;
+		this.account=user_prop.getProperty(this.fromAccountType);
+		
+	}
+
+	@BeforeClass
+	private void loadComponents() {
+		
+		this.accountInformation=new AccountInformation_component(driver);
 	}
 	
 	@Test
-	private void Test00_menu(Method method) {
-		
-		AccountInformation_component.balanceInquiryMenu();
-		
+	private void Test01_menu() {
+
+		accountInformation.balanceInquiryMenu();
+
+	}
+
+	@Test(dependsOnMethods="Test01_menu")
+	private void Test02_selectAccount() {
+
+		accountInformation.balanceInquirySelectAccount(account);
+
 	}
 	
-	@Test(dependsOnMethods="Test00_menu")
-	private void Test02_selectAccount(Method method) {
-		
-		AccountInformation_component.balanceInquirySelectAccount(account, folder, method.getName());
-		
-	}
 	@Test(dependsOnMethods="Test02_selectAccount")
-	private void Test03_result(Method method) {
-		
-		AccountInformation_component.balanceInquiryResult(folder, method.getName());
-		
+	private void Test03_result() {
+
+		accountInformation.balanceInquiryResult();
+
 	}
 }

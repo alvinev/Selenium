@@ -1,16 +1,25 @@
 package components;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
-import framework.BrowserSetup;
+public class Onboarding_component {
 
-public class Onboarding_component extends BrowserSetup{
-
+	private WebDriver driver;
+	private WebDriverWait wait20;
 	
-	public static void login(String username,String password) {
+	
+	public Onboarding_component(WebDriver driver) {
+		
+		this.driver=driver;
+		wait20 = new WebDriverWait(driver, 20);	
+	}
+
+	public void login(String username,String password) {
 
 		wait20.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='Login Internet Banking']"))).isDisplayed();
 
@@ -31,11 +40,9 @@ public class Onboarding_component extends BrowserSetup{
 
 	}
 	
-	public static void logout() {
+	public void logout() {
 
-
-		driver.findElement(By.xpath("//a[text()='[Keluar]'] | //a[text()='[Logout]']")).click();
-		
+		driver.findElement(By.xpath("//a[text()='[Keluar]'] | //a[text()='[Logout]']")).click();		
 
 	}
 }

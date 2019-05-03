@@ -1,30 +1,47 @@
 package components;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
-import framework.BrowserSetup;
-import framework.Screenshot;
 
-public class FundTransfer_component extends BrowserSetup {
+
+public class FundTransfer_component {
 	
+	private WebDriver driver;
+	private WebDriverWait wait10,wait30;
+	
+	public FundTransfer_component(WebDriver driver) {
+		this.driver=driver;
+		wait10=new WebDriverWait(driver,10);
+		wait30=new WebDriverWait(driver,30);
+		
+	}
 
-	public static void inbankMenu() {
+	public void inbankMenu() {
 		wait30.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='[Logout]'] | //a[text()='[Keluar]']"))).isDisplayed();
+		
+		if(!(driver.findElements(By.linkText("Transfer Bank Sinarmas")).size()>0))
 		driver.findElement(By.partialLinkText("Transfer")).click();
+		
 		driver.findElement(By.linkText("Transfer Bank Sinarmas")).click();
 
 	}
 	
-	public static void otbankMenu() {
+	public void otbankMenu() {
 		wait30.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='[Logout]'] | //a[text()='[Keluar]']"))).isDisplayed();
+		
+		if(!(driver.findElements(By.xpath("//a[text()='Transfer Bank Lain'] | //a[text()='Transfer Other Bank']")).size()>0))
 		driver.findElement(By.partialLinkText("Transfer")).click();
+		
 		driver.findElement(By.xpath("//a[text()='Transfer Bank Lain'] | //a[text()='Transfer Other Bank']")).click();
 	}
 
-	public static void inbankSelectAccount(String sourceAccount,String toAccount,String amount,String desc,String folder,String filename) {
+	public void inbankSelectAccount(String sourceAccount,String toAccount,String amount,String desc) {
 		//select account
 		Select accountList = new Select(driver.findElement( By.name("accountFrom")));
 		for(WebElement we : accountList.getOptions()) {
@@ -36,18 +53,19 @@ public class FundTransfer_component extends BrowserSetup {
 		transferList.selectByValue(toAccount);
 
 		//input amount
+		driver.findElement(By.name("amount")).clear();
 		driver.findElement(By.name("amount")).sendKeys(amount);
 		
 		//input desc
+		driver.findElement(By.name("description")).clear();
 		driver.findElement(By.name("description")).sendKeys(desc);
 		
-		Screenshot.capture(folder, filename);
 		//confirm
 		driver.findElement(By.xpath("//input[@value='Konfirmasi'] | //input[@value='Confirm']")).click();	
 
 	}
 	
-	public static void otbankSelectAccount(String transferMethod,String sourceAccount,String toAccount,String amount,String desc,String folder,String filename) {
+	public void otbankSelectAccount(String transferMethod,String sourceAccount,String toAccount,String amount,String desc) {
 		//select account
 		Select accountList = new Select(driver.findElement( By.name("accountFrom")));
 		for(WebElement we : accountList.getOptions()) {
@@ -68,31 +86,30 @@ public class FundTransfer_component extends BrowserSetup {
 		driver.findElement(By.id(method)).click();
 
 		//input amount
+		driver.findElement(By.name("amount")).clear();
 		driver.findElement(By.name("amount")).sendKeys(amount);
 		
 		//input desc
+		driver.findElement(By.name("description")).clear();
 		driver.findElement(By.name("description")).sendKeys(desc);
 		
-		Screenshot.capture(folder, filename);
-		
 		//confirm
 		driver.findElement(By.xpath("//input[@value='Konfirmasi'] | //input[@value='Confirm']")).click();	
 
 	}
 	
 	
-	public static void confirm(String folder,String filename) {
+	public void confirm() {
 		//input mpin
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.name("mPin"))).sendKeys("123456");
-		Screenshot.capture(folder, filename);
-
+		
 		//confirm
 		driver.findElement(By.xpath("//input[@value='Konfirmasi'] | //input[@value='Confirm']")).click();	
 	}
 	
-	public static void result(String folder,String filename) {
+	public void result() {
 		
-		Screenshot.capture(folder, filename);
+		Assert.assertEquals(true, driver.findElement(By.xpath("//td[contains(text(),'Sukses')] | //td[contains(text(),'Process')] | //td[contains(text(),'Proses')] | //td[contains(text(),'Successful') ]")).isDisplayed());
 		
 	}
 }

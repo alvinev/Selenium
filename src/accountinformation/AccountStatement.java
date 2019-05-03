@@ -1,49 +1,66 @@
 package accountinformation;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Properties;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import components.AccountInformation_component;
 import framework.BrowserSetup;
-import framework.LoadProperties;
 
 public class AccountStatement extends BrowserSetup {
 
-	private String folder="AccountInformation/AccountStatement";
-	private String account,period;
+	private String fromAccountType,account,period;
+	private AccountInformation_component accountInformation;
 
 	public AccountStatement() throws IOException {
 
-		Properties prop = LoadProperties.getProperties("accountinformation.properties");
-		this.account=prop.getProperty("accountStatementAccount");
-		this.period=prop.getProperty("accountStatementPeriod");
+		this(
+				DEFAULT_PROPERTIES.getProperty("DEF_USERNAME"),
+				DEFAULT_PROPERTIES.getProperty("DEF_FROM_ACCOUNT_TYPE"),
+				DEFAULT_PROPERTIES.getProperty("DEF_TRX_HISTORY_PERIOD")
+				);
+	}
+	
+	public AccountStatement(String fromAccountType,String period) throws IOException {
+		this(DEFAULT_PROPERTIES.getProperty("DEF_AUTOMATION_USERNAME"),fromAccountType,period);
+		
 	}
 
-	public AccountStatement(String account,String period) {
+	public AccountStatement(String username,String fromAccountType,String period) throws IOException {
 
-		this.account=account;
+		BrowserSetup.setUser(username);
+		
+		this.fromAccountType=fromAccountType;
+		this.account=user_prop.getProperty(this.fromAccountType);
 		this.period=period;
+		
+	}
+	
+	
+	@BeforeClass
+	private void loadComponents() {
+		
+		this.accountInformation=new AccountInformation_component(driver);
+				
 	}
 
 	@Test
-	private void Test00_menu(Method method) {
+	private void Test01_menu() {
 
-		AccountInformation_component.accountStatementMenu();
+		accountInformation.accountStatementMenu();
 	}
 
-	@Test(dependsOnMethods="Test00_menu")
-	private void Test01_selectAccountPeriod(Method method) {
+	@Test(dependsOnMethods="Test01_menu")
+	private void Test02_selectAccountPeriod() {
 
-		AccountInformation_component.accountStatementSelectAccountPeriod(account, period, folder, method.getName());
+		accountInformation.accountStatementSelectAccountPeriod(account, period);
 	}
 	
-	@Test(dependsOnMethods="Test01_selectAccountPeriod")
-	private void Test02_result(Method method) {
+	@Test(dependsOnMethods="Test02_selectAccountPeriod")
+	private void Test03_result() {
 
-		AccountInformation_component.accountStatementResult(folder, method.getName());
+		accountInformation.accountStatementResult();
 	}
 	
 }

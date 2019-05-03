@@ -6,14 +6,26 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 
-public class Screenshot extends BrowserSetup {
+public class Screenshot  {
+	
+	WebDriver driver;
+	JavascriptExecutor javascript;
+	
+	public Screenshot(WebDriver driver) {
+		
+		this.driver=driver;
+		javascript=(JavascriptExecutor)driver;
+		
+	}
 
-	private static String rootFolder = "Screenshots";
+	private static final String SCREENSHOT_FOLDER = "Screenshots";
 
-	public static void capture(String folder,String filename) {
+	public void capture(String folder,String filename) {
 
 		LocalDateTime currentDateTime = LocalDateTime.now();
 
@@ -30,7 +42,7 @@ public class Screenshot extends BrowserSetup {
 			File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 
 			try {
-				FileUtils.copyFile(scrFile, new File(rootFolder+"/"+folder+"/"+currentDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"/"+currentDateTime.format(DateTimeFormatter.ofPattern("HHmmss"))+"_"+filename+".png"));
+				FileUtils.copyFile(scrFile, new File(SCREENSHOT_FOLDER+"/"+folder+"/"+currentDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"/"+currentDateTime.format(DateTimeFormatter.ofPattern("HHmmss"))+"_"+filename+".png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

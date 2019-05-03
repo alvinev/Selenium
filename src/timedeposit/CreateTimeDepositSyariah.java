@@ -1,62 +1,80 @@
 package timedeposit;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Properties;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import components.TimeDeposit_component;
 import framework.BrowserSetup;
-import framework.LoadProperties;
 
 public class CreateTimeDepositSyariah extends BrowserSetup{
 
-	private String folder="TimeDeposit/CreateSyariah";
-	private String sourceAccount,amount,term,tdType;
+	private String fromAccountType,fromAccount,amount,term,tdType;
+	private TimeDeposit_component timedeposit;
 
 	public CreateTimeDepositSyariah() throws IOException {
-		Properties prop = LoadProperties.getProperties("timedeposit.properties");
-		this.sourceAccount=prop.getProperty("sourceAccountSyariah");
-		this.amount=prop.getProperty("amountSyariah");
-		this.term=prop.getProperty("termSyariah");
-		this.tdType=prop.getProperty("tdTypeSyariah");
+
+		this(
+				DEFAULT_PROPERTIES.getProperty("DEF_USERNAME"),
+				DEFAULT_PROPERTIES.getProperty("DEF_TD_SYARIAH_FROM_ACCOUNT_TYPE"),
+				DEFAULT_PROPERTIES.getProperty("DEF_TD_AMOUNT"),
+				DEFAULT_PROPERTIES.getProperty("DEF_TD_TERM"),
+				DEFAULT_PROPERTIES.getProperty("DEF_TD_TYPE")
+				
+				);
 	}
 	
-	public CreateTimeDepositSyariah(String sourceAccount,String amount,String term,String tdType) {
-		this.sourceAccount=sourceAccount;
+	public CreateTimeDepositSyariah(String fromAccountType,String amount,String term,String tdType) throws IOException {
+		
+	this(DEFAULT_PROPERTIES.getProperty("DEF_AUTOMATION_USERNAME"),fromAccountType,amount,term,tdType);
+	
+	}
+
+	public CreateTimeDepositSyariah(String username,String fromAccountType,String amount,String term,String tdType) throws IOException {
+		BrowserSetup.setUser(username);
+		this.fromAccountType=fromAccountType;
+		this.fromAccount=user_prop.getProperty(this.fromAccountType);
 		this.amount=amount;
 		this.term=term;
 		this.tdType=tdType;
+
+		
 	}
 
+	@BeforeClass
+	private void loadComponents() {
+		
+		this.timedeposit= new TimeDeposit_component(driver);
+	}
+	
 	@Test
-	private void Test00_syariahMenu(Method method) {
-		
-		TimeDeposit_component.syariahMenu();
+	private void Test01_syariahMenu() {
+
+		timedeposit.syariahMenu();
 	}
 
-	@Test(dependsOnMethods="Test00_syariahMenu")
-	private void Test01_syariahCreate(Method method) {
-		
-		TimeDeposit_component.create(sourceAccount, amount, term, tdType, folder, method.getName()+"_"+tdType+"_"+term);
+	@Test(dependsOnMethods="Test01_syariahMenu")
+	private void Test02_syariahCreate() {
+
+		timedeposit.create(fromAccount, amount, term, tdType);
 	}
-	
-	@Test(dependsOnMethods="Test01_syariahCreate")
-	private void Test02_syariahTermAndCondition(Method method) {
-		
-		TimeDeposit_component.termAndCondition(folder,method.getName()+"_"+tdType+"_"+term);
+
+	@Test(dependsOnMethods="Test02_syariahCreate")
+	private void Test03_syariahTermAndCondition() {
+
+		timedeposit.termAndCondition();
 	}
-	
-	@Test(dependsOnMethods="Test02_syariahTermAndCondition")
-	private void Test03_syariahConfirm(Method method) {		
-		
-		TimeDeposit_component.confirm(folder, method.getName()+"_"+tdType+"_"+term);
-	}
-	
+
 	@Test(dependsOnMethods="Test03_syariahTermAndCondition")
-	private void Test04_syariahResult(Method method) {
-		TimeDeposit_component.result(folder,  method.getName()+"_"+tdType+"_"+term);
+	private void Test04_syariahConfirm() {		
+
+		timedeposit.confirm();
+	}
+
+	@Test(dependsOnMethods="Test04_syariahConfirm")
+	private void Test05_syariahResult() {
+		timedeposit.result();
 	}
 
 }

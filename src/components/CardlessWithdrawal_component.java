@@ -1,29 +1,37 @@
 package components;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
-import framework.BrowserSetup;
+public class CardlessWithdrawal_component  {
 
-public class CardlessWithdrawal_component extends BrowserSetup {
-
-	public static void menu() {
+	private WebDriver driver;
+	private FundTransfer_component fundTransfer;
+	
+	public CardlessWithdrawal_component(WebDriver driver) {
+		
+		this.driver=driver;
+		fundTransfer=new FundTransfer_component(driver);
+	}
+	
+	public void menu() {
 		
 		driver.findElement(By.xpath("//a[text()='Tarik Tunai Tanpa Kartu'] | //a[text()='Cardless Withdrawal']")).click();	
 		
 	}
 	
-	public static void selectPayee(String sourceAccount,String phoneNo,String amount,String desc,String folder,String filename) {
+	public void selectPayee(String sourceAccount,String phoneNo,String amount,String desc) {
 		//add prefix to phone no
 		phoneNo="85"+phoneNo;
-		FundTransfer_component.inbankSelectAccount(sourceAccount, phoneNo, amount, desc, folder, filename);
+		fundTransfer.inbankSelectAccount(sourceAccount, phoneNo, amount, desc);
 	}
 	
-	public static void confirm(String folder,String filename) {
-		FundTransfer_component.confirm(folder, filename);
+	public void confirm() {
+		fundTransfer.confirm();
 	}
 	
-	public static void result(String folder,String filename) {
+	public void result() {
 		
-		FundTransfer_component.result(folder, filename);
+		fundTransfer.result();
 	}
 }

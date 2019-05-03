@@ -1,57 +1,71 @@
 package fundtransfer;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Properties;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import components.FundTransfer_component;
 import framework.BrowserSetup;
-import framework.LoadProperties;
 
 public class TransferOtherbank extends BrowserSetup{
 
-	private String folder="FundTransfer/otbank";
-	private String otbankMethod,sourceAccount,toAccount,amount,desc;
+	private String otbankMethod,fromAccountType,fromAccount,toAccountType,toAccount,amount,desc;
+	private FundTransfer_component fundTransfer;
 	
 	public TransferOtherbank() throws IOException {
 		
-		Properties prop = LoadProperties.getProperties("fundtransfer.properties");
-		this.otbankMethod=prop.getProperty("otbankMethod");
-		this.sourceAccount=prop.getProperty("otbankSourceAccount");
-		this.toAccount=prop.getProperty("otbankToAccount");
-		this.amount=prop.getProperty("otbankAmount");
-		this.desc=prop.getProperty("otbankDesc");		
+		this(
+				DEFAULT_PROPERTIES.getProperty("DEF_USERNAME"),
+				DEFAULT_PROPERTIES.getProperty("DEF_FROM_ACCOUNT_TYPE"),
+				DEFAULT_PROPERTIES.getProperty("DEF_TO_ACCOUNT_OTBANK_TYPE"),
+				DEFAULT_PROPERTIES.getProperty("DEF_OTBANK_METHOD"),
+				DEFAULT_PROPERTIES.getProperty("DEF_OTBANK_AMOUNT"),
+				DEFAULT_PROPERTIES.getProperty("DEF_OTBANK_DESC"));
 	}
+
+	public TransferOtherbank(String fromAccountType,String toAccountType,String otbankMethod,String amount,String desc) throws IOException {
+		
+			this(DEFAULT_PROPERTIES.getProperty("DEF_AUTOMATION_USERNAME"),fromAccountType,toAccountType,otbankMethod,amount,desc);
+		}
 	
-	public TransferOtherbank(String otbankMethod,String sourceAccount,String toACccount,String amount,String desc) {
+	public TransferOtherbank(String username,String fromAccountType,String toAccountType,String otbankMethod,String amount,String desc) throws IOException {
+		BrowserSetup.setUser(username);
 		this.otbankMethod=otbankMethod;
-		this.sourceAccount=sourceAccount;
-		this.toAccount=toACccount;
+		this.fromAccountType=fromAccountType;
+		this.fromAccount=user_prop.getProperty(this.fromAccountType);
+		this.toAccountType=toAccountType;
+		this.toAccount=user_prop.getProperty(this.toAccountType);
 		this.amount=amount;
-		this.desc=desc;
+		this.desc=desc;	
+		
 	}
-
+	
+	@BeforeClass
+	private void loadComponents() {
+		
+		this.fundTransfer=new FundTransfer_component(driver);
+	}
+	
 	@Test
-	private void Test00_otbankMenu(Method method) {
+	private void Test01_otbankMenu() {
 		
-		FundTransfer_component.otbankMenu();
+		fundTransfer.otbankMenu();
 	}
 
-	@Test(dependsOnMethods="Test00_otbankMenu")
-	private void Test01_otbankSelectAccount(Method method) {
+	@Test(dependsOnMethods="Test01_otbankMenu")
+	private void Test02_otbankSelectAccount() {
 		
-		FundTransfer_component.otbankSelectAccount(otbankMethod,sourceAccount, toAccount, amount,desc,folder,method.getName()+"_"+otbankMethod);
+		fundTransfer.otbankSelectAccount(otbankMethod,fromAccount, toAccount, amount,desc);
 	}
 	
-	@Test(dependsOnMethods="Test01_otbankSelectAccount")
-	private void Test02_otbankConfirm(Method method) {		
-		FundTransfer_component.confirm(folder,method.getName()+"_"+otbankMethod);
+	@Test(dependsOnMethods="Test02_otbankSelectAccount")
+	private void Test03_otbankConfirm() {		
+		fundTransfer.confirm();
 	}
 	
-	@Test(dependsOnMethods="Test02_otbankConfirm")
-	private void Test03_otbankResult(Method method) {
-		FundTransfer_component.result(folder,method.getName()+"_"+otbankMethod);		
+	@Test(dependsOnMethods="Test03_otbankConfirm")
+	private void Test04_otbankResult() {
+		fundTransfer.result();		
 	}
 }
