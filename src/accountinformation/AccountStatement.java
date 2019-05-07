@@ -45,20 +45,21 @@ public class AccountStatement extends BrowserSetup {
 				
 	}
 
+
 	@Test
-	private void Test01_menu() {
+	private void Test01_Account_Statement_Menu() {
 
 		accountInformation.accountStatementMenu();
 	}
 
-	@Test(dependsOnMethods="Test01_menu")
-	private void Test02_selectAccountPeriod() {
+	@Test(dependsOnMethods="Test01_Account_Statement_Menu")
+	private void Test02_Select_Account_Period() {
 
 		accountInformation.accountStatementSelectAccountPeriod(account, period);
 	}
 	
-	@Test(dependsOnMethods="Test02_selectAccountPeriod")
-	private void Test03_result() {
+	@Test(dependsOnMethods="Test02_Select_Account_Period")
+	private void Test03_Account_Statement_Result() {
 
 		accountInformation.accountStatementResult();
 	}

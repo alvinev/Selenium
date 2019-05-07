@@ -8,9 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 
 import components.Onboarding_component;
@@ -51,17 +49,7 @@ public class BrowserSetup {
 		onboarding.login(username,user_prop.getProperty("PASSWORD"));
 	}
 	
-	@BeforeTest
-	protected static void Login() {
-		
-		
-	}
-	
-	@AfterTest
-	protected static void Logout() {
-		
-		
-	}
+
 	
 	@AfterSuite(alwaysRun=true)
 	protected static void teardown() {

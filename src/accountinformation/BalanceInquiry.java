@@ -41,21 +41,21 @@ public class BalanceInquiry extends BrowserSetup {
 	}
 	
 	@Test
-	private void Test01_menu() {
+	private void Test01_Balance_Inquiry_Menu() {
 
 		accountInformation.balanceInquiryMenu();
 
 	}
 
-	@Test(dependsOnMethods="Test01_menu")
-	private void Test02_selectAccount() {
+	@Test(dependsOnMethods="Test01_Balance_Inquiry_Menu")
+	private void Test02_Select_Account() {
 
 		accountInformation.balanceInquirySelectAccount(account);
 
 	}
 	
-	@Test(dependsOnMethods="Test02_selectAccount")
-	private void Test03_result() {
+	@Test(dependsOnMethods="Test02_Select_Account")
+	private void Test03_Balance_Inquiry_Result() {
 
 		accountInformation.balanceInquiryResult();
 

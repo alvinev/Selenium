@@ -16,6 +16,7 @@ public class CardlessWithdrawal_component  {
 	
 	public void menu() {
 		
+		if(!(driver.findElements(By.name("accountFrom")).size()>0))
 		driver.findElement(By.xpath("//a[text()='Tarik Tunai Tanpa Kartu'] | //a[text()='Cardless Withdrawal']")).click();	
 		
 	}
@@ -26,12 +27,12 @@ public class CardlessWithdrawal_component  {
 		fundTransfer.inbankSelectAccount(sourceAccount, phoneNo, amount, desc);
 	}
 	
-	public void confirm() {
-		fundTransfer.confirm();
+	public void confirm(String toAccountType) {
+		fundTransfer.confirm(toAccountType);
 	}
 	
-	public void result() {
+	public void result(String fromAccountType,String toAccountType) {
 		
-		fundTransfer.result();
+		fundTransfer.result(fromAccountType,toAccountType);
 	}
 }

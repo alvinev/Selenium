@@ -41,19 +41,19 @@ public class AccountSummary extends BrowserSetup {
 	}
 
 	@Test
-	private void Test01_menu() {
+	private void Test01_Account_Summary_Menu() {
 
 		accountInformation.accountSummaryMenu();
 	}
 	
-	@Test(dependsOnMethods="Test01_menu")
-	private void Test02_selectAccount() {
+	@Test(dependsOnMethods="Test01_Account_Summary_Menu")
+	private void Test02_Select_Account() {
 		
 		accountInformation.accountSummaryselectAccount(account);
 	}
 
-	@Test(dependsOnMethods="Test02_selectAccount")
-	private void Test03_result() {
+	@Test(dependsOnMethods="Test02_Select_Account")
+	private void Test03_Account_Summary_Result() {
 
 		accountInformation.accountSummaryResult();
 	}

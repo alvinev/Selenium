@@ -48,24 +48,24 @@ public class TransferOtherbank extends BrowserSetup{
 	}
 	
 	@Test
-	private void Test01_otbankMenu() {
+	private void Test01_Transfer_Menu() {
 		
 		fundTransfer.otbankMenu();
 	}
 
-	@Test(dependsOnMethods="Test01_otbankMenu")
-	private void Test02_otbankSelectAccount() {
+	@Test(dependsOnMethods="Test01_Transfer_Menu")
+	private void Test02_Select_Account() {
 		
 		fundTransfer.otbankSelectAccount(otbankMethod,fromAccount, toAccount, amount,desc);
 	}
 	
-	@Test(dependsOnMethods="Test02_otbankSelectAccount")
-	private void Test03_otbankConfirm() {		
-		fundTransfer.confirm();
+	@Test(dependsOnMethods="Test02_Select_Account")
+	private void Test03_Confirm() {		
+		fundTransfer.confirm(toAccountType);
 	}
 	
-	@Test(dependsOnMethods="Test03_otbankConfirm")
-	private void Test04_otbankResult() {
-		fundTransfer.result();		
+	@Test(dependsOnMethods="Test03_Confirm")
+	private void Test04_Transfer_Other_Bank_Result() {
+		fundTransfer.result(fromAccountType,toAccountType);		
 	}
 }

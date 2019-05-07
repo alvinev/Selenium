@@ -31,8 +31,7 @@ public class TransactionHistory extends BrowserSetup{
 		BrowserSetup.setUser(username);
 		this.fromAccountType=fromAccountType;
 		this.fromAccount=user_prop.getProperty(this.fromAccountType);
-		
-		
+			
 	}
 	
 	@BeforeClass

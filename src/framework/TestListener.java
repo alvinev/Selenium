@@ -29,7 +29,7 @@ public class TestListener implements ITestListener{
 	private static final String SCREENSHOT_FOLDER="Screenshots";
 
 	//Change this flag to true to save screenshot on Screenshots folder
-	private static boolean SCREENSHOT_FLAG=true;
+	private static boolean SCREENSHOT_FLAG=false;
 
 	@Override
 	public void onTestStart(ITestResult result) {

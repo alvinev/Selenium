@@ -66,8 +66,8 @@ public class AsuransiSinarmas extends BrowserSetup {
 	}
 	
 	@Test(dependsOnMethods="Test03_Confirm")
-	private void Test04_Result() {	
+	private void Test04_Asuransi_Sinarmas_Result() {	
 
-		billpayment.result();
+		billpayment.result(fromAccountType);
 	}
 }

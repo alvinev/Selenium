@@ -1,0 +1,2 @@
+#fromAccountType,toAccountType,otbankMethod,amount,desc
+FROM_ACCOUNT_KONVEN_NORMAL,TO_ACCOUNT_OTBANK,network,20001,trf network

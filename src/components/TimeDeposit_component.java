@@ -9,24 +9,23 @@ import org.testng.Assert;
 
 
 public class TimeDeposit_component {
-	
+
 	private WebDriver driver;
 	private WebDriverWait wait10;
-	
+
 	public TimeDeposit_component(WebDriver driver) {
-		
+
 		this.driver=driver;
 		wait10=new WebDriverWait(driver,10);
 	}
 
-	public void konvenMenu() {
-		driver.findElement(By.xpath("//a[text()='Online Open Account'] | //a[text()='Pembukaan Rekening Online']")).click();
-		Select productList = new Select(driver.findElement(By.name("productType")));
-		productList.selectByValue("timeDeposit");
-	}
-
-	public void syariahMenu() {
+	public void timeDepositMenu(String fromAccountType) {
+		
+		if(fromAccountType.contains("SYARIAH"))
 		driver.findElement(By.xpath("//a[text()='Sharia Online Open Account'] | //a[text()='Pembukaan Rekening Online Syariah']")).click();
+		else 
+			driver.findElement(By.xpath("//a[text()='Online Open Account'] | //a[text()='Pembukaan Rekening Online']")).click();
+
 		Select productList = new Select(driver.findElement(By.name("productType")));
 		productList.selectByValue("timeDeposit");
 
@@ -39,12 +38,13 @@ public class TimeDeposit_component {
 		accountList.selectByValue(sourceAccount);
 
 		//select branch (this is defaulted for sya :ID0020002 and konven : ID0020002)
-		
+
 		if(driver.findElements(By.name("bankBranch")).size()>0) {
-		 Select branchList = new Select(driver.findElement(By.name("bankBranch"))); 
-		 if(sourceAccount.startsWith("99")) branchList.selectByValue("ID0020002");
+			Select branchList = new Select(driver.findElement(By.name("bankBranch"))); 
+			if(sourceAccount.startsWith("99")) branchList.selectByValue("ID0020002");
 		}
 		//input amount
+		driver.findElement(By.name("initialDeposit")).clear();
 		driver.findElement(By.name("initialDeposit")).sendKeys(amount);
 
 		//input period
@@ -72,7 +72,7 @@ public class TimeDeposit_component {
 		//agree tnc
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[text()='Aplikasi Deposito Berjangka'] | //td[text()='Time Deposit Application']"))).isDisplayed();
 		driver.findElement(By.name("isAgree")).click();
-		
+
 		//submit
 		driver.findElement(By.xpath("//input[@value='Continue']")).click();
 	}
@@ -85,10 +85,12 @@ public class TimeDeposit_component {
 		driver.findElement(By.xpath("//input[@value='Kirim'] | //input[@value='Submit']")).click();	
 	}
 
-	public void result() {
+	public void result(String fromAccountType) {
 
-		Assert.assertEquals(true, driver.findElement(By.xpath("//td[contains(text(),'Berhasil')] | //td[contains(text(),'Successful')]")).isDisplayed());
-
+		if(fromAccountType.contains("NORMAL") || fromAccountType.contains("BLOCK"))
+			Assert.assertEquals(true, driver.findElement(By.xpath("//td[contains(text(),'Berhasil')] | //td[contains(text(),'Successful')]")).isDisplayed());
+		else 	
+			Assert.assertEquals(true, driver.findElement(By.xpath("//div[contains(text(),'rekening anda tidak aktif')] ")).isDisplayed());
 
 	}
 

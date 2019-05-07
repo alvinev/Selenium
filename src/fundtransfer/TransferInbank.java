@@ -48,24 +48,24 @@ public class TransferInbank extends BrowserSetup {
 	}
 	
 	@Test
-	private void Test01_inbankMenu() {
+	private void Test01_Transfer_Menu() {
 
 		fundTransfer.inbankMenu();
 	}
 
-	@Test(dependsOnMethods="Test01_inbankMenu")
-	private void Test02_inbankSelectAccount() {
+	@Test(dependsOnMethods="Test01_Transfer_Menu")
+	private void Test02_Select_Account() {
 
 		fundTransfer.inbankSelectAccount(fromAccount, toAccount, amount,desc);
 	}
 
-	@Test(dependsOnMethods="Test02_inbankSelectAccount")
-	private void Test03_inbankConfirm() {		
-		fundTransfer.confirm();
+	@Test(dependsOnMethods="Test02_Select_Account")
+	private void Test03_Confirm() {		
+		fundTransfer.confirm(toAccountType);
 	}
 
-	@Test(dependsOnMethods="Test03_inbankConfirm")
-	private void Test04_inbankResult() {
-		fundTransfer.result();		
+	@Test(dependsOnMethods="Test03_Confirm")
+	private void Test04_Transfer_Inbank_Result() {
+		fundTransfer.result(fromAccountType,toAccountType);		
 	}
 }

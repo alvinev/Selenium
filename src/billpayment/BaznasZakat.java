@@ -66,8 +66,8 @@ public class BaznasZakat extends BrowserSetup{
 	}
 	
 	@Test(dependsOnMethods="Test03_Confirm")
-	private void Test04_Result() {	
+	private void Test04_Baznas_Zakat_Result() {	
 
-		billpayment.result();
+		billpayment.result(fromAccountType);
 	}
 }

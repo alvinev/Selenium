@@ -55,7 +55,6 @@ public class PAM_Aetra extends BrowserSetup{
 
 		billpayment.aetra_inquiry(subscriberNo);
 	}
-
 	
 	@Test(dependsOnMethods="Test02_Inquiry")
 	private void Test03_Select_Account() {
@@ -70,9 +69,9 @@ public class PAM_Aetra extends BrowserSetup{
 	}
 	
 	@Test(dependsOnMethods="Test04_Confirm")
-	private void Test05_Result() {	
+	private void Test05_PAM_Aetra_Result() {	
 
-		billpayment.result();
+		billpayment.result(fromAccountType);
 	}
 
 }

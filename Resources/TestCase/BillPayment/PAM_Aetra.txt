@@ -1,0 +1,2 @@
+#fromAccountType,subscriberNo,desc
+FROM_ACCOUNT_KONVEN_NORMAL,400099899,aetra

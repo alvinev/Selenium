@@ -2,40 +2,39 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="IB-Testing">
-	<test name="AccountInformation">
+	<test name="AccountInformation" group-by-instances="true">
 		<classes>
-			<class name="accountinformation.AccountStatement" />
-			<class name="accountinformation.AccountSummary" />
-			<class name="accountinformation.BalanceInquiry" />
+			<class name="accountinformation.factory.Factory_AccountStatement" />
+			<class name="accountinformation.factory.Factory_AccountSummary" />
+			<class name="accountinformation.factory.Factory_BalanceInquiry" />
 		</classes>
 	</test>
-	<test name="BillPayment">
+	<test name="BillPayment" group-by-instances="true">
 		<classes>
-			<class name="billpayment.AsuransiSinarmas" />
-			<class name="billpayment.BaznasZakat" />
-			<class name="billpayment.PAM_Aetra" />
+			<class name="billpayment.factory.Factory_AsuransiSinarmas" />
+			<class name="billpayment.factory.Factory_BaznasZakat" />
+			<class name="billpayment.factory.Factory_PAM_Aetra" />
 		</classes>
 	</test>
-	<test name="CardlessWithdrawal">
+	<test name="CardlessWithdrawal" group-by-instances="true">
 		<classes>
-			<class name="cardlesswithdrawal.CardlessWithdrawal" />
+			<class name="cardlesswithdrawal.factory.Factory_CardlessWithdrawal" />
 		</classes>
 	</test>
-	<test name="FundTransfer">
+	<test name="FundTransfer" group-by-instances="true">
 		<classes>
-			<class name="fundtransfer.TransferInbank" />
-			<class name="fundtransfer.TransferOtherbank" />
+			<class name="fundtransfer.factory.Factory_TransferInbank" />
+			<class name="fundtransfer.factory.Factory_TransferOtherbank" />
 		</classes>
 	</test>
-	<test name="TimeDeposit">
+	<test name="TimeDeposit" group-by-instances="true">
 		<classes>
-			<class name="timedeposit.CreateTimeDepositKonven" />
-			<class name="timedeposit.CreateTimeDepositSyariah" />
+			<class name="timeDeposit.factory.Factory_TimeDeposit" />
 		</classes>
 	</test>
-	<test name="TransactionHistory">
+	<test name="TransactionHistory" group-by-instances="true">
 		<classes>
-			<class name="transactionhistory.TransactionHistory" />
+			<class name="transactionhistory.factory.Factory_TransactionHistory" />
 		</classes>
 	</test>
 </suite>
