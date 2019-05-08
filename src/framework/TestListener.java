@@ -35,12 +35,15 @@ public class TestListener implements ITestListener{
 	public void onTestStart(ITestResult result) {
 		// TODO Auto-generated method stub
 
+		
 		Object currentInstance=result.getInstance();
 		if(instance==null||!currentInstance.equals(instance)) {
 
 			this.instance = currentInstance;
 			this.methodCase="";
 
+			System.out.println("Testing: "+instance.getClass().getSimpleName());
+			
 			//Initialize case if instance is empty or different from last run instance
 			try {
 				setMethodCase();
@@ -73,7 +76,10 @@ public class TestListener implements ITestListener{
 			System.out.println("FAILED: "+result.getMethod().getMethodName());
 			WebDriver driver=BrowserSetup.getDriver();
 			saveScreenshotFailedTest(driver);
-
+			
+			//revisit url in case test is failed
+			driver.get(LoadProperties.getDefaultProperties().getProperty("IB_URL"));
+			
 			if(SCREENSHOT_FLAG==true)
 				saveScreenshotOnDisk(driver, result.getMethod().getMethodName());
 		}
@@ -125,10 +131,7 @@ public class TestListener implements ITestListener{
 				String value=obj.toString();
 				
 				switch (fieldName)
-				{
-				case "billerName":
-					methodCase+=",BILLER:"+value.toLowerCase();
-					break;		
+				{	
 				case "fromAccountType":
 					methodCase+=",FROM:"+value.substring(value.indexOf("_")+1).toLowerCase();
 					break;

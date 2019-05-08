@@ -116,7 +116,7 @@ public class FundTransfer_component {
 		if(fromAccountType.contains("NORMAL")&&!toAccountType.contains("BLOCK"))
 			Assert.assertEquals(true, driver.findElement(By.xpath("//td[contains(text(),'Sukses')] | //td[contains(text(),'Process')] | //td[contains(text(),'Proses')] | //td[contains(text(),'Successful') ]")).isDisplayed());
 		else 	
-			Assert.assertEquals(true, driver.findElement(By.xpath("//div[contains(text(),'rekening anda tidak aktif')] | //td[contains(text(),'Process')] | //td[contains(text(),'Proses')] ")).isDisplayed());
+			Assert.assertEquals(true, driver.findElement(By.xpath("//div[contains(text(),'rekening anda tidak aktif')] | //td[contains(text(),'Process')] | //td[contains(text(),'Proses')] | //td[contains(text(),'pastikan rekening asal anda normal')] ")).isDisplayed());
 
 	}
 }

@@ -39,6 +39,13 @@ public class BillPayment_component {
 		//input subscriber no
 		wait10.until(ExpectedConditions.presenceOfElementLocated(By.name("subscriberNo"))).sendKeys(subscriberNo);
 		driver.findElement(By.xpath("//input[@value='Retrieve'] | //input[@value='Lihat Tagihan']")).click();
+		
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
 	}

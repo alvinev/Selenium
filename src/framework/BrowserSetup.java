@@ -44,7 +44,7 @@ public class BrowserSetup {
 		//Go open URL in browser
 		driver.get(DEFAULT_PROPERTIES.getProperty("IB_URL"));
 		driver.manage().window().maximize();
-		
+
 		onboarding=new Onboarding_component(driver);
 		onboarding.login(username,user_prop.getProperty("PASSWORD"));
 	}
