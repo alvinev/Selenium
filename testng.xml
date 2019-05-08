@@ -13,7 +13,6 @@
 		<classes>
 			<class name="billpayment.factory.Factory_AsuransiSinarmas" />
 			<class name="billpayment.factory.Factory_BaznasZakat" />
-			<class name="billpayment.factory.Factory_PAM_Aetra" />
 		</classes>
 	</test>
 	<test name="CardlessWithdrawal" group-by-instances="true">
